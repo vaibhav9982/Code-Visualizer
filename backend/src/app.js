@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import indexRoutes from "./routes/index.routes.js";
 import ApiError from "./utils/ApiError.js";
+import { errorHandler } from "./middleware/ErrorHandler.js";
 
 const app = express();
 
@@ -22,17 +23,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use((err,req,res,next)=>{
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "Something went wrong"
-  const success = err.success !== undefined?err.success :false;
-
-
-  res.status(statusCode).json({
-    success:success,
-    statusCode:statusCode,
-    message:message
-  })
-});
+app.use(errorHandler);
 
 export default app;
