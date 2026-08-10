@@ -8,7 +8,8 @@ import ApiError from "./utils/ApiError.js";
 import { errorHandler } from "./middleware/ErrorHandler.js";
 import { connectDb } from "./config/db.js";
 
-
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 const app = express();
 await connectDb();
 app.use(cors());

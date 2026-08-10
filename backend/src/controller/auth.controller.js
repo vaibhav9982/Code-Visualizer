@@ -23,3 +23,23 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, "registration Succesfull"));
 });
+export const login = asyncHandler(async(req ,res) =>
+{
+  const {  email , password} = req.body;
+  if(!email || !password)
+    {
+       throw new ApiError(400, "Please provide your  email and password.");
+    } 
+    const user = await User.findOne({email});
+    if(!user)
+    {
+       throw new ApiError(401, "invalid  email or password.");
+    }
+    const ismatch = await bcrypt.compare(password , user.password);
+    if(!ismatch)
+    {
+       throw new ApiError(401, "invalid  email or password.");
+    }
+    generateToken(res , user._id);
+    return res.status(200).json(new ApiResponse(200, "login Succesfull")); 
+ });
