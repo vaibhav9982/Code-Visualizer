@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import asyncHandler from "express-async-handler";
 import ApiError from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/AsyncHandler.js";
 
 
 const authMiddleware = asyncHandler(async (req, res, next) => {

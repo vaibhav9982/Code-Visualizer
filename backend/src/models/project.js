@@ -2,19 +2,55 @@ import mongoose from "mongoose";
 
 const projectSchema = mongoose.Schema(
   {
-    title: { type: String },
-    prompt: { type: String },
-    response: { type: String },
-    language: { type: String },
-    code: { type: String },
+    title: {
+      type: String,
+      required: true,
+    },
+
+    prompt: {
+      type: String,
+      required: true,
+    },
+
+    language: {
+      type: String,
+      required: true,
+    },
+
+    code: {
+      type: String,
+      required: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["processing", "completed", "failed"],
+      default: "processing",
+    },
+
+    generatedVisualization: {
+      code: {
+        type: String,
+      },
+
+      explanation: {
+        type: String,
+      },
+
+      type: {
+        type: String,
+      },
+    },
+
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-const project = mongoose.model("Project", projectSchema);
-export default project;
+const Project = mongoose.model("Project", projectSchema);
+
+export default Project;
