@@ -5,6 +5,7 @@ import morgan from "morgan";
 import indexRoutes from "./routes/index.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import ApiError from "./utils/ApiError.js";
+import cookieParser from"cookie-parser";
 import { errorHandler } from "./middleware/ErrorHandler.js";
 import { connectDb } from "./config/db.js";
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/v1",indexRoutes);
 app.use("/api",authRoutes)
