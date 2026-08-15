@@ -29,6 +29,6 @@ export const errorHandler = (err, req, res, next) => {
   res.status(statusCode).json({
     success: success,
     statusCode: statusCode,
-    message: statusCode < 500 ? message : "Something went wrong.",
+    message: statusCode? message : "Something went wrong.",
   });
 };
