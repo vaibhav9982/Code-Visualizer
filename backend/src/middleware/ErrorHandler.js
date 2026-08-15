@@ -1,55 +1,34 @@
-import ApiResponse from "../utils/ApiResponse.js";
-
 export const errorHandler = (err, req, res, next) => {
   if (err.name === "TokenExpiredError") {
-    const statusCode = 401;
-    return res
-      .status(statusCode)
-      .json(new ApiResponse(statusCode, "Your login session has expired."));
+    return res.status(401).json({
+      success: false,
+      statusCode: 401,
+      message: "Your login session has expired.",
+    });
   }
 
   if (err.name === "JsonWebTokenError") {
-    const statusCode = 401;
-    return res
-      .status(statusCode)
-      .json(new ApiResponse(statusCode, "Authentication failed."));
-  }
-
-  if (err.name === "CastError") {
-    const statusCode = 400;
-    return res
-      .status(statusCode)
-      .json(new ApiResponse(statusCode, "Invalid ID structural format."));
+    return res.status(401).json({
+      success: false,
+      statusCode: 401,
+      message: "Authentication failed.",
+    });
   }
 
   if (err.code === 11000) {
-    const statusCode = 409;
-    return res
-      .status(statusCode)
-      .json(
-        new ApiResponse(
-          statusCode,
-          "An account with this email already exists.",
-        ),
-      );
+    return res.status(409).json({
+      success: false,
+      statusCode: 409,
+      message: "An account with this email already exists.",
+    });
   }
-  if (err.code === 11000) {
-    const statusCode = 409;
-    return res
-      .status(statusCode)
-      .json(
-        new ApiResponse(
-          statusCode,
-          "An account with this email already exists.",
-        ),
-      );
-  }
-
   const statusCode = err.statusCode || 500;
-  const message =
-    statusCode < 500
-      ? err.message || "Something went wrong"
-      : "Something went wrong.";
+  const message = err.message || "Something went wrong";
+  const success = err.success !== undefined ? err.success : false;
 
-  return res.status(statusCode).json(new ApiResponse(statusCode, message));
+  res.status(statusCode).json({
+    success: success,
+    statusCode: statusCode,
+    message: statusCode < 500 ? message : "Something went wrong.",
+  });
 };
