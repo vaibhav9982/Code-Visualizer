@@ -17,12 +17,14 @@ export const createProject = asyncHandler(async (req, res) => {
     prompt,
     language,
     code,
+    aiAnalysis: result,
+    status: "completed",
     userId: req.user.id,
   });
 
   return res
     .status(201)
-    .json(new ApiResponse(201, "New Project created Successfully", result));
+    .json(new ApiResponse(201, "New Project created Successfully", newProj));
 });
 
 export const projects = asyncHandler(async (req, res) => {
