@@ -1,4 +1,5 @@
 import Project from "../models/project.js";
+import { generateVisualization } from "../services/AI/Ai.service.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
@@ -10,12 +11,16 @@ export const createProject = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Please Enter all the details");
   }
 
+  const result = await generateVisualization({code,language,prompt});
+
   // AI workkkk but what to do fro response language and other part visualization the react code AI will generate and i have to show it in frontend side
   const newProj = await Project.create({
     title,
     prompt,
     language,
     code,
+    aiAnalysis: result,
+    status: "completed",
     userId: req.user.id,
   });
 

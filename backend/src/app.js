@@ -15,7 +15,10 @@ const app = express();
 await connectDb();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true                
+}));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());

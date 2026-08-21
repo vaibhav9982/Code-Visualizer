@@ -40,6 +40,15 @@ For each meaningful visualization step, provide:
 - relevant data structure state
 - elements that should be highlighted
 
+Visualization data must contain the actual values that should be displayed.
+
+For arrays:
+- Do NOT use variable references such as "arr[0]" as the displayed element.
+- Use the actual value stored at that position.
+- Example: if arr = [10, 20, 30], visualization elements should be ["10", "20", "30"].
+- Array indices and highlights should be represented separately.
+- Do not make the frontend infer or guess values from variable names.
+
 For EVERY step, the state MUST contain:
 - variables: an object containing the relevant variable values at that step
 - dataStructure: an object containing the relevant data structure state at that step

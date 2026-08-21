@@ -45,9 +45,9 @@ export const login = asyncHandler(async (req, res) => {
     throw new ApiError(401, "invalid  email or password.");
   }
   
-  generateToken(res, user._id);
+  const cookie = await generateToken(res, user._id);
   
-  return res.status(201).json(new ApiResponse(201, "login Succesfull"));
+  return res.status(201).json(new ApiResponse(201, "login Succesfull",cookie));
 });
 
 export const logout = asyncHandler(async (req, res) => {
